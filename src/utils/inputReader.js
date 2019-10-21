@@ -29,7 +29,7 @@ module.exports = {
     readAmountOfEnergy()
     {
         return parseInt(readlineSync.question('How much energy use to attack? ', {
-            limit: [/d+/],
+            limit: [/\d+/],
             limitMessage: 'INCORRECT AMOUNT OF ENERGY'
         }));
     }
