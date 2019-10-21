@@ -1,7 +1,7 @@
 /**
  * The author is aware that the following code could be more elegant, especially when I use the library like 
  * `readline-sync` or `Inquirer.js`.
- * Yet, for simplicity, I've used a very clean and uncomplicated approach base on the variable `mode` and set of 
+ * Yet, for simplicity, I've used a very clean and uncomplicated approach based on the variable `mode` and the set of 
  * constants.
  */
 

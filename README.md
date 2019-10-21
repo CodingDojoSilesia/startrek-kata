@@ -1,5 +1,7 @@
 # Star Trek _Kata_
 
+The english version of the following instruction ca be found [here](README_EN.md).
+
 Niniejsza _Kata_ jest silnie inspirowana grą konsolową Apple Star-Trek stworzoną przez Roberta J. Bishopa w 1977 roku w Basicu. W grze **sterujemy** statkiem gwiezdnej floty o nazwie _Enterprise_, którego zadaniem jest zniszczenie **wrogich okrętów Klingonów**. Aby lepiej wyobrazić sobie jak wygląda rozgrywka, zobacz (to wideo)[https://www.youtube.com/watch?v=e6f9_9kzuzk].
 
 ## Opis problemu
