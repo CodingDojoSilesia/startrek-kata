@@ -1,0 +1,22 @@
+{
+    "name": "coding-dojo-silesia--startrek-kata",
+    "version": "1.0.0",
+    "main": "src/index.js",
+    "scripts": {
+        "test": "jest",
+        "start": "node src/index.js"
+    },
+    "keywords": [
+        "coding dojo",
+        "kata",
+        "star trek"
+    ],
+    "author": "Arek Nowakowski",
+    "license": "MIT",
+    "dependencies": {
+        "readline-sync": "^1.4.10"
+    },
+    "devDependencies": {
+        "jest": "^24.9.0"
+    }
+}
