@@ -2,13 +2,13 @@
 
 The english version of the following instruction ca be found [here](README_EN.md).
 
-Niniejsza _Kata_ jest silnie inspirowana grą konsolową Apple Star-Trek stworzoną przez Roberta J. Bishopa w 1977 roku w Basicu. W grze **sterujemy** statkiem gwiezdnej floty o nazwie _Enterprise_, którego zadaniem jest zniszczenie **wrogich okrętów Klingonów**. Aby lepiej wyobrazić sobie jak wygląda rozgrywka, zobacz (to wideo)[https://www.youtube.com/watch?v=e6f9_9kzuzk].
+Niniejsza _Kata_ jest silnie inspirowana grą konsolową Apple Star-Trek stworzoną przez Roberta J. Bishopa w 1977 roku w Basicu. W grze **sterujemy** statkiem gwiezdnej floty o nazwie _Enterprise_, którego zadaniem jest zniszczenie **wrogich okrętów Klingonów**. Aby lepiej wyobrazić sobie jak wygląda rozgrywka, zobacz [to wideo](https://www.youtube.com/watch?v=e6f9_9kzuzk).
 
 ## Opis problemu
 
 Statek _Enterprise_ porusza się w galaktyce podzielonej na **64 kwadranty** ułożone na siatce 8x8 pól. Każdy kwadrant składa się z **64 sektorów**, również ułożonych na siatce 8x8 pól. Kwadrant _0,0_ jest położony w lewym dolnym rogu galaktyki, z kolei kwadrant _7,7_ znajduje się w prawym górnym rogu galaktyki (sektory w kwadrantach są ułożone analogicznie). Nie ma możliwości opuszczenia galaktyki poza wskazany zakres.
 
-Po całej galaktyce w sposób losowy rozrzuconych jest **7 statków Klingonów** oraz **2 bazy gwiezdnej floty**, w których gracz może uzupełnić zapasy. W galaktyce znajduje się również losowa liczba **gwiazd**. Zniszczenie wszystkich jednostek Klingonów oznacza zwycięstwo gracza.
+Po całej galaktyce w sposób losowy rozrzuconych jest **7 statków Klingonów** oraz **2 bazy gwiezdnej floty**, w których gracz może uzupełnić zapasy. W galaktyce znajduje się również losowo rozlokowanych **20 gwiazd**. Zniszczenie wszystkich jednostek Klingonów oznacza zwycięstwo gracza.
 
 Początkowo, gracz ma do dyspozycji **15 dat gwiezdnych** oraz **600 jednostek energii** (maksymalny poziom energii).
 

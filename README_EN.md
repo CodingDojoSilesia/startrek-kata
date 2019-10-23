@@ -1,12 +1,12 @@
 # Star Trek _Kata_
 
-The following _Kata_ is strongly inspired by the console game _Apple Star-Trek_ created by Robert J. Bishop in 1977. In game, the player controls the starfleet starship _Enterprice_, which task is destruction of the Klingon's starships. To understand the gameplay better, see the following (video)[https://www.youtube.com/watch?v=e6f9_9kzuzk].
+The following _Kata_ is strongly inspired by the console game _Apple Star-Trek_ created by Robert J. Bishop in 1977. In game, the player controls the starfleet starship _Enterprice_, which task is destruction of the Klingon's starships. To understand the gameplay better, see the following [video](https://www.youtube.com/watch?v=e6f9_9kzuzk).
 
 ## Description of the problem
 
 The starship _Enterprise_ moves in the galaxy divided into 64 quadrants, placed on 8x8 grid. Each quadrant is divided into 64 sectors, which are placed on 8x8 grid as well. The quadrant _0,0_ is located in the bottom-left corner of the galaxy, whereas the quadrant _7,7_ is placed in the top-right corner (sectors are arranged in the same manner). There is no option to go outside of the galaxy boundaries.
 
-There are 7 Klingon spaceships, 2 starfleet bases and some number of stars randomly placed all over the galaxy. The victory condition is to destroy all of the Klingon starships.
+There are 7 Klingon spaceships, 2 starfleet bases and 20 stars randomly placed all over the galaxy. The victory condition is to destroy all of the Klingon starships.
 
 At the beginning, the player has 15 stardates and 600 units of energy (the maximum level of energy).
 
