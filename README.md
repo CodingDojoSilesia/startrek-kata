@@ -8,7 +8,7 @@ Niniejsza _Kata_ jest silnie inspirowana grą konsolową Apple Star-Trek stworzo
 
 Statek _Enterprise_ porusza się w galaktyce podzielonej na **64 kwadranty** ułożone na siatce 8x8 pól. Każdy kwadrant składa się z **64 sektorów**, również ułożonych na siatce 8x8 pól. Kwadrant _0,0_ jest położony w lewym dolnym rogu galaktyki, z kolei kwadrant _7,7_ znajduje się w prawym górnym rogu galaktyki (sektory w kwadrantach są ułożone analogicznie). Nie ma możliwości opuszczenia galaktyki poza wskazany zakres.
 
-Po całej galaktyce w sposób losowy rozrzuconych jest **7 statków Klingonów** oraz **2 bazy gwiezdnej floty**, w których gracz może uzupełnić zapasy. W galaktyce znajduje się również losowo rozlokowanych **20 gwiazd**. Zniszczenie wszystkich jednostek Klingonów oznacza zwycięstwo gracza.
+Po całej galaktyce w sposób losowy rozrzuconych jest **7 statków Klingonów** oraz **2 bazy gwiezdnej floty**, w których gracz może uzupełnić zapasy. W galaktyce znajduje się również losowo rozlokowanych **20 gwiazd**. Zniszczenie wszystkich jednostek Klingonów oznacza zwycięstwo gracza. Enterprise rozpoczyna grę w środku galaktyki.
 
 Początkowo, gracz ma do dyspozycji **15 dat gwiezdnych** oraz **600 jednostek energii** (maksymalny poziom energii).
 
@@ -18,7 +18,7 @@ Rozgrywka odbywa się przez wpisywanie komend do komputera pokładowego statku. 
 
 Za pomocą komendy `0` gracz przemieszcza _Enterprise_. Po wpisaniu tego polecenia komputer powinien odpowiedzieć graczowi `VECTOR ?`, co oznacza prośbę o podanie liczby sektorów w poziomie i pionie, o którą zostanie przesunięty statek. Dla przykładu: `-21,35` oznaczu ruch o 21 sektorów w lewo i 35 do góry.
 
-Przemieszczanie statku zużywa energię zgodnie z metryką miasto (tj. sumę wartości bezwględnych różnic współrzędnych). Dodatkowo, przejście z jednego kwadrantu do drugiego zużywa jedną datę gwiezdną. Gdy nie mamy już do dyspozycji dat gwieznych a poza kwadrantem, w którym obecnie znajduje się statek są jeszcze aktywne statki Klingonów to gracz przegrywa grę.
+Przemieszczanie statku zużywa energię zgodnie z metryką miasto (tj. sumę wartości bezwględnych różnic współrzędnych). Dodatkowo, przejście z jednego kwadrantu do drugiego zużywa jedną datę gwiezdną, również zgodnie z metryką miasto. Gdy nie mamy już do dyspozycji dat gwieznych a poza kwadrantem, w którym obecnie znajduje się statek są jeszcze aktywne statki Klingonów to gracz przegrywa grę.
 
 Jeżeli po przesunięciu statek znajduje się w tej samej pozycji jak inny obiekt (tj. statek Klingonów, baza gwiezdnej floty lub gwiazda) gra kończy się przez zniszczenie statku.
 

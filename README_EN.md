@@ -6,7 +6,7 @@ The following _Kata_ is strongly inspired by the console game _Apple Star-Trek_ 
 
 The starship _Enterprise_ moves in the galaxy divided into 64 quadrants, placed on 8x8 grid. Each quadrant is divided into 64 sectors, which are placed on 8x8 grid as well. The quadrant _0,0_ is located in the bottom-left corner of the galaxy, whereas the quadrant _7,7_ is placed in the top-right corner (sectors are arranged in the same manner). There is no option to go outside of the galaxy boundaries.
 
-There are 7 Klingon spaceships, 2 starfleet bases and 20 stars randomly placed all over the galaxy. The victory condition is to destroy all of the Klingon starships.
+There are 7 Klingon spaceships, 2 starfleet bases and 20 stars randomly placed all over the galaxy. The victory condition is to destroy all of the Klingon starships. Enterprise start ist mission in the center of the galaxy.
 
 At the beginning, the player has 15 stardates and 600 units of energy (the maximum level of energy).
 
@@ -16,7 +16,7 @@ The player plays by typing commands into the on-board computer. There are 5 comm
 
 The command `0` moves _Enterprise_. After typing the command in, the computer should ask the player for the movement coordinates with the prompt `VECTOR ?`. The player needs to determine the number of sectors for horizontal and vertical movement, e.g. `-21,35` means that _Enterprice_ will move by 21 sectors left and 35 up.
 
-Moving the ship uses energy according to the city block distance (between the starting and ending points). Additionaly, moving from one quadrant to another uses one stardate. If there are no remaining startdates and there are Klingon startships outside the current quadrant, then the player will lose.
+Moving the ship uses energy according to the city block distance (between the starting and ending points). Additionaly, moving from one quadrant to another uses one stardate, according to the city block distance as well. If there are no remaining startdates and there are Klingon startships outside the current quadrant, then the player will lose.
 
 After movement, if the ship is on the position as any other object, the player will lose by crashing.
 
