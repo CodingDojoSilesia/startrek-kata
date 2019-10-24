@@ -8,7 +8,7 @@ The starship _Enterprise_ moves in the galaxy divided into 64 quadrants, placed 
 
 There are 7 Klingon spaceships, 2 starfleet bases and 20 stars randomly placed all over the galaxy. The victory condition is to destroy all of the Klingon starships. Enterprise start ist mission in the center of the galaxy.
 
-At the beginning, the player has 15 stardates and 600 units of energy (the maximum level of energy).
+At the beginning, the player has 30 stardates and 600 units of energy (the maximum level of energy).
 
 The player plays by typing commands into the on-board computer. There are 5 commands numbered from 0 to 4. Before the command prompt, the computer should display the status report. The report should consist of the amount of remaining energy, the _Enterprice_ position in the galaxy and the remaining stardates.
 

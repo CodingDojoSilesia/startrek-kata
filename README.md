@@ -10,7 +10,7 @@ Statek _Enterprise_ porusza się w galaktyce podzielonej na **64 kwadranty** uł
 
 Po całej galaktyce w sposób losowy rozrzuconych jest **7 statków Klingonów** oraz **2 bazy gwiezdnej floty**, w których gracz może uzupełnić zapasy. W galaktyce znajduje się również losowo rozlokowanych **20 gwiazd**. Zniszczenie wszystkich jednostek Klingonów oznacza zwycięstwo gracza. Enterprise rozpoczyna grę w środku galaktyki.
 
-Początkowo, gracz ma do dyspozycji **15 dat gwiezdnych** oraz **600 jednostek energii** (maksymalny poziom energii).
+Początkowo, gracz ma do dyspozycji **30 dat gwiezdnych** oraz **600 jednostek energii** (maksymalny poziom energii).
 
 Rozgrywka odbywa się przez wpisywanie komend do komputera pokładowego statku. Gracz ma do dyspozycji aż **5 komend**, które numerowane są **od 0 do 4**. Przed wyświetleniem prośby o komendę komputer powinien wyswietlić status _Enterprise_, tzn. ilość zapasów energii, jego pozycję i liczbę pozostałych dat gwiezdnych.
 
