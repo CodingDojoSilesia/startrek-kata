@@ -22,12 +22,10 @@ class Game {
             const sector = MathSupport.getSectorFromSectorNumber(rs);
             if (nofKlingons > 0) {
                 generatedObjects.push(new SpaceShip(quadrant, sector, 600));
-            }
-            else if(nofStars > 0){
-                generatedObjects.push(new SpaceObject(quadrant, sector, 'space'));
-            }
-            else{
-                generatedObjects.push(new SpaceObject(quadrant, sector, 'spacebase'));
+            } else if (nofStars > 0) {
+                generatedObjects.push(new SpaceObject(quadrant, sector, "space"));
+            } else {
+                generatedObjects.push(new SpaceObject(quadrant, sector, "spacebase"));
             }
         });
         return generatedObjects;
@@ -44,27 +42,39 @@ class Game {
         else return false;
     }
 
-    movePlayer(xOffset, yOffset){
-
-        let prevousSectorNumber = MathSupport.getSectorNumberFromPosition(this.player.quadrant, this.player.sector);
-        let newSectorNumber = prevousSectorNumber + xOffset + (yOffset * 64);
-
-        let newQuadrant = MathSupport.getQuadrantFromSectorNumber(newSectorNumber);
-        let newSector = MathSupport.getSectorFromSectorNumber(newSectorNumber);
-
-        this.player.setPosition(newQuadrant, newSector);
-
+    movePlayer(xOffset, yOffset) {
+        const prevousSectorNumber = MathSupport.getSectorNumberFromPosition(this.player.quadrant, this.player.sector);
         const prevousGlobalPos = MathSupport.getGlobalPositionFromSectorNumber(prevousSectorNumber);
-        const currentGlobalPos = MathSupport.getGlobalPositionFromSectorNumber(newSectorNumber);
-        
-        let distanceTraveled = MathSupport.cityBlockDistance(
-            prevousGlobalPos.x,
-            prevousGlobalPos.y,
-            currentGlobalPos.x, 
-            currentGlobalPos.y
-        );
-        
-        this.player.reducePower(distanceTraveled);
-    }}
+        if (
+            prevousGlobalPos.x + xOffset > 0 &&
+            prevousGlobalPos.x + xOffset < 64 &&
+            prevousGlobalPos.x + yOffset > 0 &&
+            prevousGlobalPos.y + yOffset < 64
+        ) {
+            const newSectorNumber = prevousSectorNumber + xOffset + yOffset * 64;
+
+            const newQuadrant = MathSupport.getQuadrantFromSectorNumber(newSectorNumber);
+            const newSector = MathSupport.getSectorFromSectorNumber(newSectorNumber);
+
+            const currentGlobalPos = MathSupport.getGlobalPositionFromSectorNumber(newSectorNumber);
+
+            const distanceTraveled = MathSupport.cityBlockDistance(
+                prevousGlobalPos.x,
+                prevousGlobalPos.y,
+                currentGlobalPos.x,
+                currentGlobalPos.y
+            );
+
+            this.starDates -= MathSupport.cityBlockDistance(
+                this.player.quadrant.x,
+                this.player.quadrant.y,
+                newQuadrant.x,
+                newQuadrant.y
+            );
+            this.player.setPosition(newQuadrant, newSector);
+            this.player.reducePower(distanceTraveled);
+        } else console.log("You cannot leave the galaxy!");
+    }
+}
 
 module.exports = Game;
