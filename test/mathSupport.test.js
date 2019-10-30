@@ -52,8 +52,10 @@ describe('Test getQuadrantFromSectorNumber', () => {
             [7, new Point(0, 0)],
             [8, new Point(1, 0)],
             [63, new Point(7, 0)],
-            [64, new Point(0, 1)],
-            [127, new Point(7, 1)],
+            [64, new Point(0, 0)],
+            [127, new Point(7, 0)],
+            [512, new Point(0, 1)],
+            [520, new Point(1, 1)],
             [4095, new Point(7, 7)]
         ]
         cases.forEach(c => 
@@ -79,7 +81,11 @@ describe('Test getSectorFromSectorNumber', () => {
             [64, new Point(0, 1)],
             [65, new Point(1, 1)],
             [71, new Point(7, 1)],
-            [4095, new Point(7, 7)]
+            [4095, new Point(7, 7)],
+            [520, new Point(0, 0)],
+            [521, new Point(1, 0)],
+            [584, new Point(0, 1)],
+            [585, new Point(1, 1)]
         ]
         cases.forEach(c => 
             expect(mathSupport.getSectorFromSectorNumber(c[0])).toEqual(c[1])
@@ -97,8 +103,28 @@ describe('Test getSectorNumberFromPosition', () => {
             [new Point(1, 0), new Point(0, 0), 8],
             [new Point(1, 0), new Point(0, 1), 72],
             [new Point(0, 1), new Point(0, 0), 512],
-            [new Point(7, 7), new Point(7, 7), 4095]
+            [new Point(7, 7), new Point(7, 7), 4095],
+            [new Point(1, 1), new Point(0, 0), 520],
+            [new Point(1, 1), new Point(1, 0), 521],
+            [new Point(1, 1), new Point(0, 1), 584],
+            [new Point(1, 1), new Point(1, 1), 585]
         ]
         cases.forEach(c => expect(mathSupport.getSectorNumberFromPosition(c[0], c[1])).toBe(c[2]));
     })
-})
+});
+
+describe('Test getGlobalPositionFromSectorNumber', () => {
+    it('Should return global position from proper sector number', () => {
+        const cases = [
+            [0, new Point(0, 0)],
+            [1, new Point(1, 0)],
+            [63, new Point(63, 0)],
+            [64, new Point(0, 1)],
+            [65, new Point(1, 1)],
+            [127, new Point(63, 1)],
+            [512, new Point(0, 8)],
+            [4095, new Point(63, 63)]
+        ];
+        cases.forEach(c => expect(mathSupport.getGlobalPositionFromSectorNumber(c[0])).toEqual(c[1]));
+    })
+});

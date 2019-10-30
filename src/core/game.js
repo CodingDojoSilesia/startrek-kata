@@ -43,6 +43,28 @@ class Game {
             return true;
         else return false;
     }
-}
+
+    movePlayer(xOffset, yOffset){
+
+        let prevousSectorNumber = MathSupport.getSectorNumberFromPosition(this.player.quadrant, this.player.sector);
+        let newSectorNumber = prevousSectorNumber + xOffset + (yOffset * 64);
+
+        let newQuadrant = MathSupport.getQuadrantFromSectorNumber(newSectorNumber);
+        let newSector = MathSupport.getSectorFromSectorNumber(newSectorNumber);
+
+        this.player.setPosition(newQuadrant, newSector);
+
+        const prevousGlobalPos = MathSupport.getGlobalPositionFromSectorNumber(prevousSectorNumber);
+        const currentGlobalPos = MathSupport.getGlobalPositionFromSectorNumber(newSectorNumber);
+        
+        let distanceTraveled = MathSupport.cityBlockDistance(
+            prevousGlobalPos.x,
+            prevousGlobalPos.y,
+            currentGlobalPos.x, 
+            currentGlobalPos.y
+        );
+        
+        this.player.reducePower(distanceTraveled);
+    }}
 
 module.exports = Game;

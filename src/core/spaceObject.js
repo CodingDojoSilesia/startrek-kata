@@ -1,8 +1,19 @@
 class SpaceObject {
     constructor(quadrant, sector, type){
+        this.type = type;
+        this.setPosition(quadrant, sector);
+    }
+
+    setPosition(quadrant, sector){
         this.quadrant = quadrant;
         this.sector = sector;
-        this.type = type;
+    }
+    
+    getPosition(){
+        return {
+            quadrant: this.quadrant,
+            sector: this.sector   
+        }
     }
 }
 
