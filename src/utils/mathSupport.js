@@ -10,7 +10,8 @@ function randomUniques(min, max, length){
     if (length > max - min)
         throw new RangeError('Providen length is bigger than range');
     while(uniques.size < length){
-        uniques.add(Math.floor(Math.random() * (max - min)) + min);
+        let rnd = Math.floor(Math.random() * (max - min)) + min
+        uniques.add(rnd);
     }
     return Array.from(uniques);
 }

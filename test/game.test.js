@@ -1,8 +1,8 @@
 const Game = require('../src/core/game');
-const spaceObject = require('../src/core/spaceObject');
+const SpaceObject = require('../src/core/spaceObject');
 
 describe('Testing generateObject', () => {
-    const config = {
+    let config = {
         GALAXY: {
             QUADRANTS: 64,
             SECTORS_IN_QUADRANT: 64,
@@ -14,10 +14,10 @@ describe('Testing generateObject', () => {
         INITIAL_STARDATES: 30
     }
     const game = new Game(config);
-    xit('Should return an array of spaceObjects', () => {
+    it('Should return an array of SpaceObjects', () => {
         const result = game.generateObjects();
         expect(result).toBeInstanceOf(Array);
         expect(result.length).toBe(29);
-        result.forEach(el => expect(el).toBeInstanceOf(spaceObject))
+        result.forEach(el => expect(el).toBeInstanceOf(SpaceObject))
     })
 });

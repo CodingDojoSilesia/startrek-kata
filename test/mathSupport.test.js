@@ -93,7 +93,11 @@ describe('Test getSectorNumberFromPosition', () => {
             [new Point(0, 0), new Point(0, 0), 0],
             [new Point(0, 0), new Point(7, 0), 7],
             [new Point(0, 0), new Point(0, 1), 64],
-            [new Point(0, 0), new Point(7, 1), 71]
+            [new Point(0, 0), new Point(7, 1), 71],
+            [new Point(1, 0), new Point(0, 0), 8],
+            [new Point(1, 0), new Point(0, 1), 72],
+            [new Point(0, 1), new Point(0, 0), 512],
+            [new Point(7, 7), new Point(7, 7), 4095]
         ]
         cases.forEach(c => expect(mathSupport.getSectorNumberFromPosition(c[0], c[1])).toBe(c[2]));
     })
