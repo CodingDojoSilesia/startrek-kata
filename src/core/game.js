@@ -8,7 +8,7 @@ class Game {
         this.gameConfig = config;
         this.player = new SpaceShip(new Point(3, 3), new Point(3, 3), config.MAX_POWER);
         this.galaxy = new Galaxy(config.GALAXY); 
-
+        this.isOver = false;
         this.starDates = config.INITIAL_STARDATES;        
     }
 
@@ -35,6 +35,9 @@ class Game {
                 currentGlobalPos.y
             );
 
+            if(newQuadrant.x != this.player.quadrant.y || newQuadrant.y != this.player.quadrant.y)
+                this.galaxy.shuffleQuadrant(this.player.quadrant);
+
             this.starDates -= mathSupport.cityBlockDistance(
                 this.player.quadrant.x,
                 this.player.quadrant.y,
@@ -44,6 +47,10 @@ class Game {
             this.player.setPosition(newQuadrant, newSector);
             this.player.reducePower(distanceTraveled);
         } else console.log("You cannot leave the galaxy!");
+    }
+
+    hasPlayerLose(){
+        
     }
 }
 

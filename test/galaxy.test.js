@@ -12,15 +12,31 @@ let galaxy = new Galaxy(config);
 
 beforeEach(() => galaxy = new Galaxy(config));
 
-describe("Test generateObject", () => {
+describe("Test generateObjects", () => {
     it("Should return an array of SpaceObjects", () => {
         const result = galaxy.generateObjects();
         expect(result).toBeInstanceOf(Array);
         expect(result.length).toBe(29);
         result.forEach(el => expect(el).toBeInstanceOf(SpaceObject));
     });
+    it("Should return proper objects", () => {
+        const result = galaxy.generateObjects();
+        let nofK = 0;
+        let nofSB = 0;
+        let nofS = 0;
+        result.forEach(el => {
+            if(el.type == 'ship')
+                nofK++;
+            if(el.type == 'starbase')
+                nofSB++;
+            if(el.type == 'star')
+                nofS++;
+        });
+        expect(nofK).toBe(config.KLINGON_SHIPS);
+        expect(nofS).toBe(config.STARS);
+        expect(nofSB).toBe(config.STARBASES);
+    });
 });
-
 describe('Test getQuadrantFromSectorNumber', () => {
     it('Should return a point object', () => {
         let result = galaxy.getQuadrantFromSectorNumber(0);
@@ -122,7 +138,7 @@ describe('Test getQuadrant', () => {
             new SpaceObject(new Point(4, 3), new Point(3, 3)),
             new SpaceObject(new Point(3, 5), new Point(3, 3))
         ];
-        const result = galaxy.getQuadrant(new Point(3, 3));
+        const result = galaxy.getQuadrantObjects(new Point(3, 3));
         expect(result).toBeInstanceOf(Array);
         expect(result.length).toBe(3);
         result.forEach(el => expect(el).toBeInstanceOf(SpaceObject));
@@ -136,7 +152,7 @@ describe('Test getQuadrant', () => {
             new SpaceObject(new Point(4, 3), new Point(3, 3)),
             new SpaceObject(new Point(3, 5), new Point(3, 3))
         ];
-        const result = galaxy.getQuadrant(new Point(1, 1));
+        const result = galaxy.getQuadrantObjects(new Point(1, 1));
         expect(result).toBeInstanceOf(Array);
         expect(result.length).toBe(0);
     })

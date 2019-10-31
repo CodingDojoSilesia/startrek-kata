@@ -14,7 +14,7 @@ const COMMANDS_MODE = 0, MANOEUVRE_MODE = 1, BATTLE_MODE = 2;
 let mode = COMMANDS_MODE; // the current mode
 const game = new Game(config);
 
-while (true)
+while (!game.isOver)
 {
     if (mode === COMMANDS_MODE) { // the normal commands mode
         
@@ -29,7 +29,7 @@ while (true)
                 mode = BATTLE_MODE;
                 break;
             case inputReader.SHORT_SCAN_COMMAND:
-                console.log(renderer.renderQuadrant(game.player, game.galaxy.getQuadrant(game.player.quadrant)));
+                console.log(renderer.renderQuadrant(game.player, game.galaxy.getQuadrantObjects(game.player.quadrant)));
                 break;
         }
         
