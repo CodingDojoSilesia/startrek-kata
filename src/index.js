@@ -4,11 +4,15 @@
  * Yet, for simplicity, I've used a very clean and uncomplicated approach based on the variable `mode` and the set of 
  * constants.
  */
-const inputReader = require('./utils/inputReader')
+const inputReader = require('./utils/inputReader');
+const renderer = require('./utils/renderer');
+const Game = require('./core/game');
+const config = require('./config');
 
 const COMMANDS_MODE = 0, MANOEUVRE_MODE = 1, BATTLE_MODE = 2;
 
 let mode = COMMANDS_MODE; // the current mode
+const game = new Game(config);
 
 while (true)
 {
@@ -24,12 +28,16 @@ while (true)
                 console.log('ENTERING INTO THE BATTLE MODE');
                 mode = BATTLE_MODE;
                 break;
+            case inputReader.SHORT_SCAN_COMMAND:
+                console.log(renderer.renderQuadrant(game.player, game.galaxy.getQuadrant(game.player.quadrant)));
+                break;
         }
         
     } else if (mode === MANOEUVRE_MODE) { // the movement of Enterprise
         
         let vector = inputReader.readVector();
         mode = COMMANDS_MODE;
+        game.movePlayer(vector[0], vector[1]);
         
     } else if (mode === BATTLE_MODE) { // the battle protocol
         
@@ -41,4 +49,5 @@ while (true)
         }
         
     }
+    console.log(renderer.displayPlayerRaport(game.player) + ', REMAINING STARDATES: ' + game.starDates);
 }

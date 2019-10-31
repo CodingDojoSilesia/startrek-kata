@@ -1,0 +1,143 @@
+const Galaxy = require('../src/core/galaxy');
+const SpaceObject = require('../src/core/spaceObject');
+const Point = require('../src/utils/point');
+const config = {
+    QUADRANTS: 64,
+    SECTORS_IN_QUADRANT: 64,
+    KLINGON_SHIPS: 7,
+    STARBASES: 2,
+    STARS: 20
+}
+let galaxy = new Galaxy(config);
+
+beforeEach(() => galaxy = new Galaxy(config));
+
+describe("Test generateObject", () => {
+    it("Should return an array of SpaceObjects", () => {
+        const result = galaxy.generateObjects();
+        expect(result).toBeInstanceOf(Array);
+        expect(result.length).toBe(29);
+        result.forEach(el => expect(el).toBeInstanceOf(SpaceObject));
+    });
+});
+
+describe('Test getQuadrantFromSectorNumber', () => {
+    it('Should return a point object', () => {
+        let result = galaxy.getQuadrantFromSectorNumber(0);
+        expect(result).toEqual(expect.objectContaining({
+            x: expect.any(Number),
+            y: expect.any(Number)
+        }));
+    });
+    it('Should return quadrant position on proper sector number', () => {
+        const cases = [
+            [0, new Point(0, 0)],
+            [7, new Point(0, 0)],
+            [8, new Point(1, 0)],
+            [63, new Point(7, 0)],
+            [64, new Point(0, 0)],
+            [127, new Point(7, 0)],
+            [512, new Point(0, 1)],
+            [520, new Point(1, 1)],
+            [4095, new Point(7, 7)]
+        ]
+        cases.forEach(c => 
+            expect(galaxy.getQuadrantFromSectorNumber(c[0])).toEqual(c[1])
+        );
+    })
+});
+
+describe('Test getSectorFromSectorNumber', () => {
+    it('Should return a point object', () => {
+        let result = galaxy.getSectorFromSectorNumber(0);
+        expect(result).toEqual(expect.objectContaining({
+            x: expect.any(Number),
+            y: expect.any(Number)
+        }));
+    });
+    it('Should return sector position on proper sector number', () => {
+        const cases = [
+            [0, new Point(0, 0)],
+            [7, new Point(7, 0)],
+            [8, new Point(0, 0)],
+            [63, new Point(7, 0)],
+            [64, new Point(0, 1)],
+            [65, new Point(1, 1)],
+            [71, new Point(7, 1)],
+            [4095, new Point(7, 7)],
+            [520, new Point(0, 0)],
+            [521, new Point(1, 0)],
+            [584, new Point(0, 1)],
+            [585, new Point(1, 1)]
+        ]
+        cases.forEach(c => 
+            expect(galaxy.getSectorFromSectorNumber(c[0])).toEqual(c[1])
+        );
+    })
+});
+
+describe('Test getSectorNumberFromPosition', () => {
+    it('Should retur sector number on proper position', () => {
+        const cases = [
+            [new Point(0, 0), new Point(0, 0), 0],
+            [new Point(0, 0), new Point(7, 0), 7],
+            [new Point(0, 0), new Point(0, 1), 64],
+            [new Point(0, 0), new Point(7, 1), 71],
+            [new Point(1, 0), new Point(0, 0), 8],
+            [new Point(1, 0), new Point(0, 1), 72],
+            [new Point(0, 1), new Point(0, 0), 512],
+            [new Point(7, 7), new Point(7, 7), 4095],
+            [new Point(1, 1), new Point(0, 0), 520],
+            [new Point(1, 1), new Point(1, 0), 521],
+            [new Point(1, 1), new Point(0, 1), 584],
+            [new Point(1, 1), new Point(1, 1), 585]
+        ]
+        cases.forEach(c => expect(galaxy.getSectorNumberFromPosition(c[0], c[1])).toBe(c[2]));
+    })
+});
+
+describe('Test getGlobalPositionFromSectorNumber', () => {
+    it('Should return global position from proper sector number', () => {
+        const cases = [
+            [0, new Point(0, 0)],
+            [1, new Point(1, 0)],
+            [63, new Point(63, 0)],
+            [64, new Point(0, 1)],
+            [65, new Point(1, 1)],
+            [127, new Point(63, 1)],
+            [512, new Point(0, 8)],
+            [4095, new Point(63, 63)]
+        ];
+        cases.forEach(c => expect(galaxy.getGlobalPositionFromSectorNumber(c[0])).toEqual(c[1]));
+    });
+});
+
+describe('Test getQuadrant', () => {
+
+    it('Should return array of spaceObjects when quadrant is not empty', () => {
+        galaxy.SpaceObjects = [
+            new SpaceObject(new Point(3, 3), new Point(3, 3)),
+            new SpaceObject(new Point(3, 3), new Point(2, 1)),
+            new SpaceObject(new Point(3, 3), new Point(5, 8)),
+            new SpaceObject(new Point(4, 3), new Point(3, 3)),
+            new SpaceObject(new Point(3, 5), new Point(3, 3))
+        ];
+        const result = galaxy.getQuadrant(new Point(3, 3));
+        expect(result).toBeInstanceOf(Array);
+        expect(result.length).toBe(3);
+        result.forEach(el => expect(el).toBeInstanceOf(SpaceObject));
+    })
+
+    it('Should return empty when quadrant is empty', () => {
+        galaxy.SpaceObjects = [
+            new SpaceObject(new Point(3, 3), new Point(3, 3)),
+            new SpaceObject(new Point(3, 3), new Point(2, 1)),
+            new SpaceObject(new Point(3, 3), new Point(5, 8)),
+            new SpaceObject(new Point(4, 3), new Point(3, 3)),
+            new SpaceObject(new Point(3, 5), new Point(3, 3))
+        ];
+        const result = galaxy.getQuadrant(new Point(1, 1));
+        expect(result).toBeInstanceOf(Array);
+        expect(result.length).toBe(0);
+    })
+});

@@ -19,28 +19,7 @@ describe("Test construtor", () => {
     expect(game.player.power).toBe(600);
 });
 
-describe("Test generateObject", () => {
-    const game = new Game(config);
-    it("Should return an array of SpaceObjects", () => {
-        const result = game.generateObjects();
-        expect(result).toBeInstanceOf(Array);
-        expect(result.length).toBe(29);
-        result.forEach(el => expect(el).toBeInstanceOf(SpaceObject));
-    });
-});
-
 describe("Test movePlayer", () => {
-    let config = {
-        GALAXY: {
-            QUADRANTS: 64,
-            SECTORS_IN_QUADRANT: 64
-        },
-        KLINGON_SHIPS: 7,
-        STARBASES: 2,
-        STARS: 20,
-        MAX_POWER: 600,
-        INITIAL_STARDATES: 30
-    };
     const game = new Game(config);
 
     beforeEach(() => {
@@ -96,7 +75,7 @@ describe("Test movePlayer", () => {
     });
 
     it("Should not move player if tried to leave galaxy", () => {
-        const cases = [[1000, 0], [0, 1000], [1000, 1000], [-1000, 0], [0, -1000], [-1000, -1000]];
+        const cases = [[100, 0], [0, 100], [100, 100], [-100, 0], [0, -100], [-100, -100]];
         const expected = {
             quadrant: {
                 x: 3,
@@ -132,15 +111,5 @@ it("Should reduce stardates when change quadrant", () => {
         expect(game.starDates).toBe(30 - c[2]);
         game.player.setPosition(new Point(3, 3), new Point(3, 3));
         game.starDates = 30;
-    });
-});
-
-describe("Test hasPlayerCollided", () => {
-    const game = new Game(config);
-    it("Should return true if player collided", () => {
-        expect(game.hasPlayerCollided(new Point(3, 3), new Point(3, 3))).toBe(true);
-    });
-    it("Should return false if player not collided", () => {
-        expect(game.hasPlayerCollided(new Point(3, 3), new Point(3, 4))).toBe(false);
     });
 });

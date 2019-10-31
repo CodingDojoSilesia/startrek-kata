@@ -16,31 +16,7 @@ function randomUniques(min, max, length){
     return Array.from(uniques);
 }
 
-function getQuadrantFromSectorNumber(sectorNumber){
-    let x = Math.floor(sectorNumber / 8) % 8;
-    let y = Math.floor(sectorNumber / 512);
-    return new Point(x, y);
-}
-
-function getSectorFromSectorNumber(sectorNumber){
-    let x = sectorNumber % 8;
-    let y = Math.floor(sectorNumber / 64) % 8;
-    return new Point(x, y);
-}
-
-function getSectorNumberFromPosition(quadrant, sector){
-    return quadrant.x * 8 + quadrant.y * 512 + sector.x + sector.y * 64; 
-}
-
-function getGlobalPositionFromSectorNumber(sectorNumber){
-    return new Point(sectorNumber % 64, Math.floor(sectorNumber / 64));
-}
-
 module.exports = {
     cityBlockDistance,
-    randomUniques,
-    getQuadrantFromSectorNumber,
-    getSectorFromSectorNumber,
-    getSectorNumberFromPosition,
-    getGlobalPositionFromSectorNumber
+    randomUniques
 };
