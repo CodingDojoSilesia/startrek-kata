@@ -50,11 +50,11 @@ describe('Test getQuadrantFromSectorNumber', () => {
         const cases = [
             [0, new Point(0, 0)],
             [7, new Point(0, 0)],
-            [8, new Point(1, 0)],
-            [63, new Point(7, 0)],
+            [8, new Point(0, 1)],
+            [63, new Point(0, 7)],
             [64, new Point(0, 0)],
-            [127, new Point(7, 0)],
-            [512, new Point(0, 1)],
+            [127, new Point(0, 7)],
+            [512, new Point(1, 0)],
             [520, new Point(1, 1)],
             [4095, new Point(7, 7)]
         ]
@@ -75,16 +75,16 @@ describe('Test getSectorFromSectorNumber', () => {
     it('Should return sector position on proper sector number', () => {
         const cases = [
             [0, new Point(0, 0)],
-            [7, new Point(7, 0)],
+            [7, new Point(0, 7)],
             [8, new Point(0, 0)],
-            [63, new Point(7, 0)],
-            [64, new Point(0, 1)],
+            [63, new Point(0, 7)],
+            [64, new Point(1, 0)],
             [65, new Point(1, 1)],
-            [71, new Point(7, 1)],
+            [71, new Point(1, 7)],
             [4095, new Point(7, 7)],
             [520, new Point(0, 0)],
-            [521, new Point(1, 0)],
-            [584, new Point(0, 1)],
+            [521, new Point(0, 1)],
+            [584, new Point(1, 0)],
             [585, new Point(1, 1)]
         ]
         cases.forEach(c => 
@@ -185,10 +185,11 @@ describe('Test getSurroundingQuadrantsPos', () => {
     it('Should return an array of points', () => {
         const cases = [
             [new Point(0, 0), [2, 2]],
-            [new Point(0, 1), [2, 3]],
+            [new Point(0, 1), [3, 2]],
             [new Point(7, 0), [2, 2]],
             [new Point(7, 7), [2, 2]],
-            [new Point(3, 3), [3, 3]]
+            [new Point(3, 3), [3, 3]],
+            [new Point(3, 0), [2, 3]]
         ];
 
         cases.forEach(c => {

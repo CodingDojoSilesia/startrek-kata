@@ -13,17 +13,17 @@ class Game {
         this.knownQuadrants = [];
         for (let i = 0; i < Math.sqrt(config.GALAXY.QUADRANTS); i++) {
             this.knownQuadrants.push([]);
-            for (let j = 0; j < Math.sqrt(config.GALAXY.QUADRANTS); j++){
-                this.knownQuadrants[i].push(['?', '?', '?']);
+            for (let j = 0; j < Math.sqrt(config.GALAXY.QUADRANTS); j++) {
+                this.knownQuadrants[i].push(["?", "?", "?"]);
             }
         }
     }
 
     longDistanceScan() {
         const types = {
-            'ship': 0,
-            'starbase': 1,
-            'star': 2
+            ship: 0,
+            starbase: 1,
+            star: 2
         };
         const quadrants = this.galaxy.getSurroundingQuadrantsPos(this.player.quadrant);
         let result = [];
@@ -80,6 +80,25 @@ class Game {
         } else {
             console.log("You cannot leave the galaxy!");
         }
+    }
+
+    makeKlingonsTurn() {
+        this.galaxy.getQuadrantObjects(this.player.quadrant).forEach(so => {
+            if (so.type == "ship") {
+                let discanceToPlayer = mathSupport.cityBlockDistance(
+                    this.player.sector.x,
+                    this.player.sector.y,
+                    so.sector.x,
+                    so.sector.y
+                );
+                let hasHit = Math.random() > (1 - 5 / (mathSupport.cityBlockDistance(discanceToPlayer) + 4));
+                if(hasHit){
+                    console.log('Klingons has attacked and hit you!');
+                } else {
+                    console.log('Klingons has attacked, but missed.');
+                }
+            }
+        });
     }
 
     detectPlayerCollisions() {

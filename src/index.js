@@ -13,7 +13,7 @@ const COMMANDS_MODE = 0,
     MANOEUVRE_MODE = 1,
     BATTLE_MODE = 2;
 
-let mode = COMMANDS_MODE; // the current mode
+let mode = COMMANDS_MODE;
 let game = new Game(config);
 
 while (!game.isOver) {
@@ -26,11 +26,10 @@ while (!game.isOver) {
         }
         if (answer == "y") game = new Game(config);
     } else if (mode === COMMANDS_MODE) {
-        // the normal commands mode
         console.log(renderer.displayPlayerRaport(game.player) + ", REMAINING STARDATES: " + game.starDates);
         let command = inputReader.readCommand();
         switch (
-            command // fill all commands here
+            command
         ) {
             case inputReader.MANOEUVRE_COMMAND:
                 console.log("ENTERING INTO THE MANOEUVRE MODE");
@@ -51,19 +50,21 @@ while (!game.isOver) {
                 break;
         }
     } else if (mode === MANOEUVRE_MODE) {
-        // the movement of Enterprise
 
         let vector = inputReader.readVector();
         mode = COMMANDS_MODE;
         game.movePlayer(vector[0], vector[1]);
     } else if (mode === BATTLE_MODE) {
-        // the battle protocol
 
-        console.log("ENTERPRISE HAS ? ENERGY"); // please code the right thing here
+        console.log(`ENTERPRISE HAS ${game.player.power} ENERGY`);
         let amountOfEnergy = inputReader.readAmountOfEnergy();
         if (amountOfEnergy === 0) {
             console.log("ENTERING INTO THE COMMANDS MODE");
             mode = COMMANDS_MODE;
         }
+        else{
+            game.playerShoot(amountOfEnergy);
+        }
     }
+    game.makeKlingonsTurn();
 }

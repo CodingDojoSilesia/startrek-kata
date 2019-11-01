@@ -14,7 +14,6 @@ function displayPlayerRaport(player) {
 
 function renderQuadrant(player, gameObjects) {
     let quadrantString = renderEmptyQuadrant();
-    const playerStrPos = getPosInQuadStr(player.sector.x, player.sector.y);
     for (let i = 0; i <= gameObjects.length; i++) {
         let symbol = "";
         let objectPos = 0;
@@ -57,7 +56,7 @@ function render2dArr(arr){
     let renderStr = '';
     for (let y = arr.length - 1; y >= 0; y--){
         for(let x = 0; x < arr[y].length; x++){
-            renderStr += '|' + arr[x][y].join('');
+            renderStr += '|' + arr[y][x].join('');
         }
         renderStr += '|' + eol;
     }
