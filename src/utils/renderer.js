@@ -55,12 +55,12 @@ function renderEmptyQuadrant() {
 
 function render2dArr(arr){
     let renderStr = '';
-    arr.forEach(x => {
-        x.forEach(y => {
-            renderStr += `|${y.join('')}|`;
-        });
-        renderStr += eol;
-    });
+    for (let y = arr.length - 1; y >= 0; y--){
+        for(let x = 0; x < arr[y].length; x++){
+            renderStr += '|' + arr[x][y].join('');
+        }
+        renderStr += '|' + eol;
+    }
     return renderStr;
 }
 module.exports = {

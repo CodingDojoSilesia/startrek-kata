@@ -184,17 +184,18 @@ describe('Test getRemainingKlingons', () => {
 describe('Test getSurroundingQuadrantsPos', () => {
     it('Should return an array of points', () => {
         const cases = [
-            [new Point(0, 0), 4],
-            [new Point(0, 1), 6],
-            [new Point(7, 0), 4],
-            [new Point(7, 7), 4],
-            [new Point(3, 3), 9]
+            [new Point(0, 0), [2, 2]],
+            [new Point(0, 1), [2, 3]],
+            [new Point(7, 0), [2, 2]],
+            [new Point(7, 7), [2, 2]],
+            [new Point(3, 3), [3, 3]]
         ];
 
         cases.forEach(c => {
             let result = galaxy.getSurroundingQuadrantsPos(c[0]);
             expect(result).toBeInstanceOf(Array);
-            expect(result.length).toBe(c[1]);
+            expect(result.length).toBe(c[1][0]);
+            result.forEach(el => expect(el.length).toBe(c[1][1]));
         })
     });
 })

@@ -43,6 +43,9 @@ while (!game.isOver) {
             case inputReader.SHORT_SCAN_COMMAND:
                 console.log(renderer.renderQuadrant(game.player, game.galaxy.getQuadrantObjects(game.player.quadrant)));
                 break;
+            case inputReader.LONG_SCAN_COMMAND:
+                console.log(renderer.render2dArr(game.longDistanceScan()));
+                break;
             case inputReader.GALAXY_MAP_COMMAND:
                 console.log(renderer.render2dArr(game.knownQuadrants));
                 break;

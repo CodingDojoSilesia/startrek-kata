@@ -24,12 +24,21 @@ class Game {
             'ship': 0,
             'starbase': 1,
             'star': 2
-        }
-        this.galaxy.getSurroundingQuadrantsPos(this.player.quadrant).forEach((q, i) => {
-            this.galaxy.getQuadrantObjects(q).forEach(so => {
-
+        };
+        const quadrants = this.galaxy.getSurroundingQuadrantsPos(this.player.quadrant);
+        let result = [];
+        quadrants.forEach((r, y) => {
+            result.push([]);
+            r.forEach((q, x) => {
+                let counter = [0, 0, 0];
+                this.galaxy.getQuadrantObjects(q).forEach(so => {
+                    counter[types[so.type]] += 1;
+                });
+                result[y].push(counter);
+                this.knownQuadrants[q.x][q.y] = counter;
             });
         });
+        return result;
     }
 
     movePlayer(xOffset, yOffset) {
