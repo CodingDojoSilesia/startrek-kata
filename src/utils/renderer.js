@@ -53,9 +53,20 @@ function renderEmptyQuadrant() {
     return quadrantString;
 }
 
+function render2dArr(arr){
+    let renderStr = '';
+    arr.forEach(x => {
+        x.forEach(y => {
+            renderStr += `|${y.join('')}|`;
+        });
+        renderStr += eol;
+    });
+    return renderStr;
+}
 module.exports = {
     renderQuadrant,
     renderEmptyQuadrant,
     getPosInQuadStr,
+    render2dArr,
     displayPlayerRaport
 };

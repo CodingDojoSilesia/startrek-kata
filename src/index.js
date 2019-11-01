@@ -19,16 +19,15 @@ let game = new Game(config);
 while (!game.isOver) {
     game.checkIfOver();
     if (game.isOver) {
-        let answer = '';
-        while(answer != 'y' && answer != 'n'){
+        let answer = "";
+        while (answer != "y" && answer != "n") {
             console.log(answer);
             answer = inputReader.readContinueDecision();
         }
-        if (answer == 'y')
-            game = new Game(config);
+        if (answer == "y") game = new Game(config);
     } else if (mode === COMMANDS_MODE) {
         // the normal commands mode
-        console.log(renderer.displayPlayerRaport(game.player) + ', REMAINING STARDATES: ' + game.starDates);
+        console.log(renderer.displayPlayerRaport(game.player) + ", REMAINING STARDATES: " + game.starDates);
         let command = inputReader.readCommand();
         switch (
             command // fill all commands here
@@ -43,6 +42,9 @@ while (!game.isOver) {
                 break;
             case inputReader.SHORT_SCAN_COMMAND:
                 console.log(renderer.renderQuadrant(game.player, game.galaxy.getQuadrantObjects(game.player.quadrant)));
+                break;
+            case inputReader.GALAXY_MAP_COMMAND:
+                console.log(renderer.render2dArr(game.knownQuadrants));
                 break;
         }
     } else if (mode === MANOEUVRE_MODE) {
@@ -61,5 +63,4 @@ while (!game.isOver) {
             mode = COMMANDS_MODE;
         }
     }
-
 }

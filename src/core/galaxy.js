@@ -9,6 +9,20 @@ class Galaxy {
         this.SpaceObjects = this.generateObjects();
     }
 
+    getSurroundingQuadrantsPos(currentQuadrant){
+        let surroundingQuadrants = [];
+        for(let i = 0; i < 3; i++){
+            for(let j = 0; j < 3; j++){
+                let x = currentQuadrant.x - 1 + i;
+                let y = currentQuadrant.y - 1 + j;
+                if (MathSupport.inRange(x, 0, Math.sqrt(this.config.QUADRANTS) - 1) && MathSupport.inRange(y, 0, Math.sqrt(this.config.QUADRANTS) - 1)){
+                    surroundingQuadrants.push(new Point(x, y));
+                }
+            }
+        };
+        return surroundingQuadrants;
+    }
+
     getRemainingKlingons(){
         return this.SpaceObjects.filter(so => so.type == 'ship').length;
     }
@@ -38,7 +52,7 @@ class Galaxy {
     }
 
     getQuadrantObjects(quadrant) {
-        return this.SpaceObjects.filter(so => so.quadrant.x == quadrant.x && so.quadrant.y == quadrant.y);
+        return this.SpaceObjects.filter(so => MathSupport.hasCollided(so.quadrant, quadrant));
     }
 
     getQuadrantFromSectorNumber(sectorNumber) {

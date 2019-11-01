@@ -20,8 +20,15 @@ function hasCollided(pos1, pos2){
     return (pos1.x == pos2.x && pos1.y == pos2.y);
 }
 
+function inRange(value, min, max){
+    if (min > max)
+        throw new RangeError('Minimum is bigger than maximum');
+    return (value >= min && value <= max);
+}
+
 module.exports = {
     cityBlockDistance,
     randomUniques,
-    hasCollided
+    hasCollided,
+    inRange
 };
