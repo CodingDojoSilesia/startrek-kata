@@ -9,6 +9,10 @@ class Galaxy {
         this.SpaceObjects = this.generateObjects();
     }
 
+    getRemainingKlingons(){
+        return this.SpaceObjects.filter(so => so.type == 'ship').length;
+    }
+
     generateObjects() {
         let generatedObjects = [];
 
@@ -85,6 +89,15 @@ class Galaxy {
             }
             return so;
         });
+    }
+
+    getSurrouningSectors(sector){
+        return [
+            new Point(sector.x - 1, sector.y),
+            new Point(sector.x, sector.y - 1),
+            new Point(sector.x + 1, sector.y),
+            new Point(sector.x, sector.y + 1)
+        ]
     }
 }
 

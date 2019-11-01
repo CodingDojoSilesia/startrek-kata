@@ -16,7 +16,12 @@ function randomUniques(min, max, length){
     return Array.from(uniques);
 }
 
+function hasCollided(pos1, pos2){
+    return (pos1.x == pos2.x && pos1.y == pos2.y);
+}
+
 module.exports = {
     cityBlockDistance,
-    randomUniques
+    randomUniques,
+    hasCollided
 };

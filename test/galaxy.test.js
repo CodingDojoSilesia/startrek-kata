@@ -1,5 +1,6 @@
 const Galaxy = require('../src/core/galaxy');
 const SpaceObject = require('../src/core/spaceObject');
+const SpaceShip = require('../src/core/spaceShip');
 const Point = require('../src/utils/point');
 const config = {
     QUADRANTS: 64,
@@ -155,5 +156,27 @@ describe('Test getQuadrant', () => {
         const result = galaxy.getQuadrantObjects(new Point(1, 1));
         expect(result).toBeInstanceOf(Array);
         expect(result.length).toBe(0);
+    })
+});
+
+describe('Test getRemainingKlingons', () => {
+    it('Should return number of klingon in whole galaxy', () => {
+        galaxy.SpaceObjects = [
+            new SpaceObject(new Point(3, 3), new Point(3, 3)),
+            new SpaceObject(new Point(4, 2), new Point(3, 3)),
+            new SpaceObject(new Point(1, 0), new Point(3, 3)),
+            new SpaceShip(new Point(0, 0), new Point(3, 3)),
+            new SpaceShip(new Point(0, 0), new Point(0, 0)),
+            new SpaceShip(new Point(2, 0), new Point(3, 3))
+        ];
+        expect(galaxy.getRemainingKlingons()).toBe(3);
+    });
+    it('Should return 0 if there is no more klingons', () => {
+        galaxy.SpaceObjects = [
+            new SpaceObject(new Point(3, 3), new Point(3, 3)),
+            new SpaceObject(new Point(4, 2), new Point(3, 3)),
+            new SpaceObject(new Point(1, 0), new Point(3, 3))
+        ];
+        expect(galaxy.getRemainingKlingons()).toBe(0);
     })
 });
