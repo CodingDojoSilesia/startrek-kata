@@ -16,6 +16,9 @@ const COMMANDS_MODE = 0,
 let mode = COMMANDS_MODE; // the current mode
 let game = new Game(config);
 
+game.player.quadrant = {x: 0, y: 0};
+game.longScan();
+
 while (!game.isOver) {
     game.checkIfOver();
     if (game.isOver) {

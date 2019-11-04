@@ -129,17 +129,86 @@ it("Should reduce stardates when change quadrant", () => {
 });
 
 describe('Test LongScan', () => {
-    xit('Should return an 3d array containing numbers of objects in surroinging quadrants', () => {
-        galaxy.SpaceObjects = [
-            new SpaceObject(new Point(3, 3), new Point(3, 3), 'starbase'),
-            new SpaceObject(new Point(4, 2), new Point(3, 3), 'star'),
-            new SpaceObject(new Point(1, 0), new Point(3, 3), 'starbase'),
-            new SpaceShip(new Point(0, 0), new Point(3, 3)),
-            new SpaceShip(new Point(0, 0), new Point(0, 0)),
-            new SpaceShip(new Point(2, 0), new Point(3, 3)),
+    it('Should return an 3d array of proper length', () => {
+        game.galaxy.SpaceObjects = [];
+        const cases = [
+            [new Point(3, 3), 3, 3],
+            [new Point(0, 0), 2, 2],
+            [new Point(0, 3), 3, 2],
+            [new Point(0, 7), 2, 2],
+            [new Point(3, 7), 2, 3],
+            [new Point(7, 7), 2, 2],
+            [new Point(7, 3), 3, 2],
+            [new Point(7, 0), 2, 2],
+            [new Point(3, 0), 2, 3]
+        ];
+
+        cases.forEach(c =>{
+            game.player.quadrant = c[0];
+            let result = game.longScan();
+            expect(result.length).toBe(c[1]);
+            result.forEach(column => expect(column.length).toBe(c[2]))
+        });
+    });
+
+    it('Should return array of proper schema', () => {
+        game.galaxy.SpaceObjects = [];
+        const expected = [
+            [[0, 0, 0],[0, 0, 0],[0, 0, 0]],
+            [[0, 0, 0],[0, 0, 0],[0, 0, 0]],
+            [[0, 0, 0],[0, 0, 0],[0, 0, 0]]
+        ]
+        expect(game.longScan()).toEqual(expected);
+    });
+
+    it('Should return proper number of objects', () => {
+        game.player.quadrant = new Point(1, 1);
+        game.galaxy.SpaceObjects = [
+            new SpaceShip(new Point(0, 0), new Point(0, 0), 600),
+            new SpaceShip(new Point(0, 0), new Point(0, 2), 600),
+            new SpaceObject(new Point(1, 0), new Point(3, 4), 'starbase'),
+            new SpaceObject(new Point(1, 0), new Point(3, 3), 'star'),
+            new SpaceObject(new Point(4, 4), new Point(3, 3), 'star')
+        ];
+
+        const expected = [
+            [[2, 0, 0], [0, 1, 1], [0, 0, 0]],
+            [[0, 0, 0], [0, 0, 0], [0, 0, 0]],
+            [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
+        ];
+
+        expect(game.longScan()).toEqual(expected);
+    });
+
+    it('Should update knowGalaxy', () => {
+        game.player.quadrant = new Point(1, 1);
+        game.galaxy.SpaceObjects = [
+            new SpaceShip(new Point(0, 0), new Point(0, 0), 600),
+            new SpaceShip(new Point(0, 0), new Point(0, 2), 600),
+            new SpaceObject(new Point(1, 0), new Point(3, 4), 'starbase'),
+            new SpaceObject(new Point(1, 0), new Point(3, 3), 'star'),
+            new SpaceObject(new Point(4, 4), new Point(3, 3), 'star')
+        ];
+        const us = ['?', '?', '?'];
+        const ks = [
+            [[2, 0, 0], [0, 1, 1], [0, 0, 0]],
+            [[0, 0, 0], [0, 0, 0], [0, 0, 0]],
+            [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
         ];
         const expected = [
-            []
-        ]
+            [ks[0][0], ks[1][0], ks[2][0], us, us, us, us, us],
+            [ks[0][1], ks[1][1], ks[2][1], us, us, us, us, us],
+            [ks[0][2], ks[1][2], ks[2][2], us, us, us, us, us],
+            [us, us, us, us, us, us, us, us],
+            [us, us, us, us, us, us, us, us],
+            [us, us, us, us, us, us, us, us],
+            [us, us, us, us, us, us, us, us],
+            [us, us, us, us, us, us, us, us]
+        ];
+        game.longScan();
+        expect(game.knownGalaxy).toEqual(expected);
     })
 });
+
+
+
