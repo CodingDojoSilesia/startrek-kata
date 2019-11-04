@@ -15,8 +15,11 @@ const config = {
     INITIAL_STARDATES: 30
 };
 
+let game = new Game(config);
+
+beforeEach(() => game = new Game(config));
+
 describe("Test construtor", () => {
-    game = new Game(config);
     it('Should create player', () => {
         expect(game.player).toBeInstanceOf(SpaceShip);
         expect(game.player.power).toBe(600);
@@ -35,8 +38,6 @@ describe("Test construtor", () => {
 });
 
 describe("Test movePlayer", () => {
-    const game = new Game(config);
-
     beforeEach(() => {
         game.player.setPosition(new Point(3, 3), new Point(3, 3));
         game.player.power = 600;
@@ -60,17 +61,15 @@ describe("Test movePlayer", () => {
 
     it("Should move player on proper vector", () => {
         const cases = [
+            [[-27, -27], [0, 0], [0, 0]],
+            [[-27, 0], [0, 3], [0, 3]],
+            [[-27, 36], [0, 7], [0, 7]],
+            [[36, 36], [7, 7], [7, 7]],
+            [[0, 0], [3, 3], [3, 3]],
             [[2, 0], [3, 3], [5, 3]],
             [[-2, 0], [3, 3], [1, 3]],
             [[0, 2], [3, 3], [3, 5]],
-            [[0, -2], [3, 3], [3, 1]],
-            [[2, 2], [3, 3], [5, 5]],
-            [[8, 0], [4, 3], [3, 3]],
-            [[-8, 0], [2, 3], [3, 3]],
-            [[8, 8], [4, 4], [3, 3]],
-            [[0, 8], [3, 4], [3, 3]],
-            [[0, -8], [3, 2], [3, 3]],
-            [[9, 9], [4, 4], [4, 4]]
+            [[0, -2], [3, 3], [3, 1]]
         ];
         cases.forEach(c => {
             const expected = {
@@ -90,7 +89,7 @@ describe("Test movePlayer", () => {
     });
 
     it("Should not move player if tried to leave galaxy", () => {
-        const cases = [[100, 0], [0, 100], [100, 100], [-100, 0], [0, -100], [-100, -100]];
+        const cases = [[37, 0], [0, 37], [37, 37], [-29, 0], [0, -29], [-29, -29]];
         const expected = {
             quadrant: {
                 x: 3,
