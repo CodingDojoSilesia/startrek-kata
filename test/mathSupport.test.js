@@ -44,3 +44,18 @@ describe("Test hasCollided", () => {
     it("Should return true if positions are different", () =>
         expect(mathSupport.hasCollided(new Point(3, 3), new Point(3, 1))).toBe(false));
 });
+
+describe('Test inRange', () => {
+    it('Should return true if given value is in range', () => {
+        expect(mathSupport.inRange(0, 0, 100)).toBe(true);
+        expect(mathSupport.inRange(50, 0, 100)).toBe(true);
+        expect(mathSupport.inRange(100, 0, 100)).toBe(true);
+    });
+    it('Should return false if given value is not in range', () => {
+        expect(mathSupport.inRange(-1, 0, 100)).toBe(false);
+        expect(mathSupport.inRange(101, 0, 100)).toBe(false);
+    })
+    it('Should throw a RangeError if min value is bigger than max', () => {
+        expect(() => mathSupport.inRange(0, 100, 0)).toThrow(RangeError);
+    })
+});

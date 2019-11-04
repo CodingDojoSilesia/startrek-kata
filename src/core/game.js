@@ -71,6 +71,19 @@ class Game {
         });        
     };
 
+    longScan(){
+        let scanResult = [];
+        for (let y = 0; y < 3; y++){
+            let qY = this.player.quadrant.y - 1 - y;
+            if(mathSupport.inRange())
+            for (let x = 0; x < 3; x++){
+                let qX = this.player.quadrant.x - 1 - x;
+                
+            }
+        }
+        return scanResult;
+    }
+
     checkIfOver(){
 
         const klingonsInCurrentQuadrant = this.galaxy.getQuadrantObjects(this.player.quadrant).filter(so =>

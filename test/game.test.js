@@ -113,3 +113,19 @@ it("Should reduce stardates when change quadrant", () => {
         game.starDates = 30;
     });
 });
+
+describe('Test LongScan', () => {
+    xit('Should return an 3d array containing numbers of objects in surroinging quadrants', () => {
+        galaxy.SpaceObjects = [
+            new SpaceObject(new Point(3, 3), new Point(3, 3), 'starbase'),
+            new SpaceObject(new Point(4, 2), new Point(3, 3), 'star'),
+            new SpaceObject(new Point(1, 0), new Point(3, 3), 'starbase'),
+            new SpaceShip(new Point(0, 0), new Point(3, 3)),
+            new SpaceShip(new Point(0, 0), new Point(0, 0)),
+            new SpaceShip(new Point(2, 0), new Point(3, 3)),
+        ];
+        const expected = [
+            []
+        ]
+    })
+});

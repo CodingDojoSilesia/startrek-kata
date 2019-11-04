@@ -41,10 +41,6 @@ class Galaxy {
         return this.SpaceObjects.filter(so => so.quadrant.x == quadrant.x && so.quadrant.y == quadrant.y);
     }
 
-    getLongScanObjects(playerQuadrant){
-        
-    }
-
     getQuadrantFromSectorNumber(sectorNumber) {
         const sectInQuad = this.config.SECTORS_IN_QUADRANT;
         const nofQuad = this.config.QUADRANTS;
