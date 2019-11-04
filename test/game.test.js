@@ -1,5 +1,6 @@
 const Game = require("../src/core/game");
 const SpaceObject = require("../src/core/spaceObject");
+const SpaceShip = require('../src/core/spaceShip');
 const Point = require("../src/utils/point");
 
 const config = {
@@ -16,7 +17,21 @@ const config = {
 
 describe("Test construtor", () => {
     game = new Game(config);
-    expect(game.player.power).toBe(600);
+    it('Should create player', () => {
+        expect(game.player).toBeInstanceOf(SpaceShip);
+        expect(game.player.power).toBe(600);
+        expect(game.player.quadrant).toEqual(new Point(3, 3));
+        expect(game.player.sector).toEqual(new Point(3, 3));
+    });
+    it('Should generate known galaxy filled with ? sumbols', () => {
+        expect(game.knownGalaxy).toBeInstanceOf(Array);
+        expect(game.knownGalaxy.length).toBe(8);
+        game.knownGalaxy.forEach(row => {
+            expect(row).toBeInstanceOf(Array);
+            expect(row.length).toBe(8);
+            row.forEach(el => expect(el).toEqual(['?', '?', '?']));
+        })
+    });
 });
 
 describe("Test movePlayer", () => {

@@ -9,7 +9,14 @@ class Game {
         this.player = new SpaceShip(new Point(3, 3), new Point(3, 3), config.MAX_POWER);
         this.galaxy = new Galaxy(config.GALAXY); 
         this.isOver = false;
-        this.starDates = config.INITIAL_STARDATES;        
+        this.starDates = config.INITIAL_STARDATES;
+        this.knownGalaxy = [];
+        for (let i = 0; i < Math.sqrt(config.GALAXY.QUADRANTS); i++){
+            this.knownGalaxy.push([]);
+            for (let j = 0; j < Math.sqrt(config.GALAXY.QUADRANTS); j++){
+                this.knownGalaxy[i].push(['?', '?', '?']);
+            }
+        }      
     }
 
     movePlayer(xOffset, yOffset) {
@@ -32,10 +39,8 @@ class Game {
             currentGlobalPos.y
         );
         if (
-            prevousGlobalPos.x + xOffset >= 0 &&
-            prevousGlobalPos.x + xOffset < 64 &&
-            prevousGlobalPos.y + yOffset >= 0 &&
-            prevousGlobalPos.y + yOffset < 64 &&
+            mathSupport.inRange(prevousGlobalPos.x + xOffset, 0, 63) &&
+            mathSupport.inRange(prevousGlobalPos.y + yOffset, 0, 63) &&
             this.starDates - quadrantDistance > 0 &&
             this.player.power - distanceTraveled > 0
         ) {
@@ -72,13 +77,24 @@ class Game {
     };
 
     longScan(){
+        const types = {
+            'ship': 0,
+            'starbase': 1,
+            'star': 2
+        }
         let scanResult = [];
         for (let y = 0; y < 3; y++){
             let qY = this.player.quadrant.y - 1 - y;
-            if(mathSupport.inRange())
+            if(!mathSupport.inRange(qy, 0, 7))
+                continue;
+            scanResult.push([]);
             for (let x = 0; x < 3; x++){
                 let qX = this.player.quadrant.x - 1 - x;
-                
+                if (mathSupport.inRange(qX, 0, 7)){
+                    let objectsCounter = [0,0,0];
+                    this.galaxy.getQuadrantObjects(new Point(qx, qy)).forEach(so => objectsCounter[types[so.type]]++);
+
+                }
             }
         }
         return scanResult;
