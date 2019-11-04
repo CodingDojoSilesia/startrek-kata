@@ -54,7 +54,7 @@ function renderEmptyQuadrant() {
 
 function render2dArray(arr){
     let renderStr = '';
-    arr.reverse().forEach(row => {
+    [...arr].reverse().forEach(row => {
         renderStr += '|';
         row.forEach(el => {
             renderStr += el.join('') + '|';

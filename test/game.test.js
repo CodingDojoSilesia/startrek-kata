@@ -196,9 +196,9 @@ describe('Test LongScan', () => {
             [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
         ];
         const expected = [
-            [ks[0][0], ks[1][0], ks[2][0], us, us, us, us, us],
-            [ks[0][1], ks[1][1], ks[2][1], us, us, us, us, us],
-            [ks[0][2], ks[1][2], ks[2][2], us, us, us, us, us],
+            [ks[0][0], ks[0][1], ks[0][2], us, us, us, us, us],
+            [ks[1][0], ks[1][1], ks[1][2], us, us, us, us, us],
+            [ks[2][0], ks[2][1], ks[2][2], us, us, us, us, us],
             [us, us, us, us, us, us, us, us],
             [us, us, us, us, us, us, us, us],
             [us, us, us, us, us, us, us, us],

@@ -92,7 +92,7 @@ class Game {
                             .getQuadrantObjects(new Point(qX, qY))
                             .forEach(so => objectsCounter[types[so.type]]++);
                         scanResult[scanResult.length - 1].push(objectsCounter);
-                        this.knownGalaxy[qX][qY] = objectsCounter;
+                        this.knownGalaxy[qY][qX] = objectsCounter;
                     }
                 }
             }
