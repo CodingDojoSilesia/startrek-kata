@@ -14,7 +14,6 @@ function displayPlayerRaport(player) {
 
 function renderQuadrant(player, gameObjects) {
     let quadrantString = renderEmptyQuadrant();
-    const playerStrPos = getPosInQuadStr(player.sector.x, player.sector.y);
     for (let i = 0; i <= gameObjects.length; i++) {
         let symbol = "";
         let objectPos = 0;
@@ -53,9 +52,22 @@ function renderEmptyQuadrant() {
     return quadrantString;
 }
 
+function render2dArray(arr){
+    let renderStr = '';
+    arr.reverse().forEach(row => {
+        renderStr += '|';
+        row.forEach(el => {
+            renderStr += el.join('') + '|';
+        })
+        renderStr += eol;
+    })
+    return renderStr;
+}
+
 module.exports = {
     renderQuadrant,
     renderEmptyQuadrant,
     getPosInQuadStr,
-    displayPlayerRaport
+    displayPlayerRaport,
+    render2dArray
 };

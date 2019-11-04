@@ -162,9 +162,9 @@ describe('Test getQuadrant', () => {
 describe('Test getRemainingKlingons', () => {
     it('Should return number of klingon in whole galaxy', () => {
         galaxy.SpaceObjects = [
-            new SpaceObject(new Point(3, 3), new Point(3, 3)),
-            new SpaceObject(new Point(4, 2), new Point(3, 3)),
-            new SpaceObject(new Point(1, 0), new Point(3, 3)),
+            new SpaceObject(new Point(3, 3), new Point(3, 3), 'starbase'),
+            new SpaceObject(new Point(4, 2), new Point(3, 3), 'star'),
+            new SpaceObject(new Point(1, 0), new Point(3, 3), 'starbase'),
             new SpaceShip(new Point(0, 0), new Point(3, 3)),
             new SpaceShip(new Point(0, 0), new Point(0, 0)),
             new SpaceShip(new Point(2, 0), new Point(3, 3))
@@ -178,5 +178,21 @@ describe('Test getRemainingKlingons', () => {
             new SpaceObject(new Point(1, 0), new Point(3, 3))
         ];
         expect(galaxy.getRemainingKlingons()).toBe(0);
+    })
+});
+
+describe('GetLongScanObjects', () => {
+    xit('Should return an 3d array containing numbers of objects in surroinging quadrants', () => {
+        galaxy.SpaceObjects = [
+            new SpaceObject(new Point(3, 3), new Point(3, 3), 'starbase'),
+            new SpaceObject(new Point(4, 2), new Point(3, 3), 'star'),
+            new SpaceObject(new Point(1, 0), new Point(3, 3), 'starbase'),
+            new SpaceShip(new Point(0, 0), new Point(3, 3)),
+            new SpaceShip(new Point(0, 0), new Point(0, 0)),
+            new SpaceShip(new Point(2, 0), new Point(3, 3)),
+        ];
+        const expected = [
+            []
+        ]
     })
 });
