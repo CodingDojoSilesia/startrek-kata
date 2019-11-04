@@ -22,7 +22,7 @@ class Game {
     movePlayer(xOffset, yOffset) {
         const prevousSectorNumber = this.galaxy.getSectorNumberFromPosition(this.player.quadrant, this.player.sector);
         const prevousGlobalPos = this.galaxy.getGlobalPositionFromSectorNumber(prevousSectorNumber);
-        const newSectorNumber = prevousSectorNumber + xOffset + yOffset * 64;
+        const newSectorNumber = prevousSectorNumber + yOffset + xOffset * 64;
         const newQuadrant = this.galaxy.getQuadrantFromSectorNumber(newSectorNumber);
         const newSector = this.galaxy.getSectorFromSectorNumber(newSectorNumber);
         const currentGlobalPos = this.galaxy.getGlobalPositionFromSectorNumber(newSectorNumber);
