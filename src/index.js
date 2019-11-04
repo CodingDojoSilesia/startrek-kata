@@ -26,6 +26,7 @@ while (!game.isOver) {
         }
         if (answer == "y") game = new Game(config);
     } else if (mode === COMMANDS_MODE) {
+        // the normal commands mode
         console.log(renderer.displayPlayerRaport(game.player) + ", REMAINING STARDATES: " + game.starDates);
         let command = inputReader.readCommand();
         switch (
@@ -43,10 +44,10 @@ while (!game.isOver) {
                 console.log(renderer.renderQuadrant(game.player, game.galaxy.getQuadrantObjects(game.player.quadrant)));
                 break;
             case inputReader.LONG_SCAN_COMMAND:
-                console.log(renderer.render2dArr(game.longDistanceScan()));
+                console.log(renderer.render2dArray(game.longScan()));
                 break;
             case inputReader.GALAXY_MAP_COMMAND:
-                console.log(renderer.render2dArr(game.knownQuadrants));
+                console.log(renderer.render2dArray(game.knownGalaxy));
                 break;
         }
     } else if (mode === MANOEUVRE_MODE) {
@@ -66,5 +67,4 @@ while (!game.isOver) {
             game.playerShoot(amountOfEnergy);
         }
     }
-    game.makeKlingonsTurn();
 }

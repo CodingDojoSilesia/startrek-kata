@@ -1,5 +1,6 @@
 const Game = require("../src/core/game");
 const SpaceObject = require("../src/core/spaceObject");
+const SpaceShip = require('../src/core/spaceShip');
 const Point = require("../src/utils/point");
 
 const config = {
@@ -14,14 +15,29 @@ const config = {
     INITIAL_STARDATES: 30
 };
 
+let game = new Game(config);
+
+beforeEach(() => game = new Game(config));
+
 describe("Test construtor", () => {
-    game = new Game(config);
-    expect(game.player.power).toBe(600);
+    it('Should create player', () => {
+        expect(game.player).toBeInstanceOf(SpaceShip);
+        expect(game.player.power).toBe(600);
+        expect(game.player.quadrant).toEqual(new Point(3, 3));
+        expect(game.player.sector).toEqual(new Point(3, 3));
+    });
+    it('Should generate known galaxy filled with ? sumbols', () => {
+        expect(game.knownGalaxy).toBeInstanceOf(Array);
+        expect(game.knownGalaxy.length).toBe(8);
+        game.knownGalaxy.forEach(row => {
+            expect(row).toBeInstanceOf(Array);
+            expect(row.length).toBe(8);
+            row.forEach(el => expect(el).toEqual(['?', '?', '?']));
+        })
+    });
 });
 
 describe("Test movePlayer", () => {
-    const game = new Game(config);
-
     beforeEach(() => {
         game.player.setPosition(new Point(3, 3), new Point(3, 3));
         game.player.power = 600;
@@ -45,17 +61,15 @@ describe("Test movePlayer", () => {
 
     it("Should move player on proper vector", () => {
         const cases = [
+            [[-27, -27], [0, 0], [0, 0]],
+            [[-27, 0], [0, 3], [0, 3]],
+            [[-27, 36], [0, 7], [0, 7]],
+            [[36, 36], [7, 7], [7, 7]],
+            [[0, 0], [3, 3], [3, 3]],
             [[2, 0], [3, 3], [5, 3]],
             [[-2, 0], [3, 3], [1, 3]],
             [[0, 2], [3, 3], [3, 5]],
-            [[0, -2], [3, 3], [3, 1]],
-            [[2, 2], [3, 3], [5, 5]],
-            [[8, 0], [4, 3], [3, 3]],
-            [[-8, 0], [2, 3], [3, 3]],
-            [[8, 8], [4, 4], [3, 3]],
-            [[0, 8], [3, 4], [3, 3]],
-            [[0, -8], [3, 2], [3, 3]],
-            [[9, 9], [4, 4], [4, 4]]
+            [[0, -2], [3, 3], [3, 1]]
         ];
         cases.forEach(c => {
             const expected = {
@@ -75,7 +89,7 @@ describe("Test movePlayer", () => {
     });
 
     it("Should not move player if tried to leave galaxy", () => {
-        const cases = [[100, 0], [0, 100], [100, 100], [-100, 0], [0, -100], [-100, -100]];
+        const cases = [[37, 0], [0, 37], [37, 37], [-29, 0], [0, -29], [-29, -29]];
         const expected = {
             quadrant: {
                 x: 3,
@@ -113,3 +127,88 @@ it("Should reduce stardates when change quadrant", () => {
         game.starDates = 30;
     });
 });
+
+describe('Test LongScan', () => {
+    it('Should return an 3d array of proper length', () => {
+        game.galaxy.SpaceObjects = [];
+        const cases = [
+            [new Point(3, 3), 3, 3],
+            [new Point(0, 0), 2, 2],
+            [new Point(0, 3), 3, 2],
+            [new Point(0, 7), 2, 2],
+            [new Point(3, 7), 2, 3],
+            [new Point(7, 7), 2, 2],
+            [new Point(7, 3), 3, 2],
+            [new Point(7, 0), 2, 2],
+            [new Point(3, 0), 2, 3]
+        ];
+
+        cases.forEach(c =>{
+            game.player.quadrant = c[0];
+            let result = game.longScan();
+            expect(result.length).toBe(c[1]);
+            result.forEach(column => expect(column.length).toBe(c[2]))
+        });
+    });
+
+    it('Should return array of proper schema', () => {
+        game.galaxy.SpaceObjects = [];
+        const expected = [
+            [[0, 0, 0],[0, 0, 0],[0, 0, 0]],
+            [[0, 0, 0],[0, 0, 0],[0, 0, 0]],
+            [[0, 0, 0],[0, 0, 0],[0, 0, 0]]
+        ]
+        expect(game.longScan()).toEqual(expected);
+    });
+
+    it('Should return proper number of objects', () => {
+        game.player.quadrant = new Point(1, 1);
+        game.galaxy.SpaceObjects = [
+            new SpaceShip(new Point(0, 0), new Point(0, 0), 600),
+            new SpaceShip(new Point(0, 0), new Point(0, 2), 600),
+            new SpaceObject(new Point(1, 0), new Point(3, 4), 'starbase'),
+            new SpaceObject(new Point(1, 0), new Point(3, 3), 'star'),
+            new SpaceObject(new Point(4, 4), new Point(3, 3), 'star')
+        ];
+
+        const expected = [
+            [[2, 0, 0], [0, 1, 1], [0, 0, 0]],
+            [[0, 0, 0], [0, 0, 0], [0, 0, 0]],
+            [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
+        ];
+
+        expect(game.longScan()).toEqual(expected);
+    });
+
+    it('Should update knowGalaxy', () => {
+        game.player.quadrant = new Point(1, 1);
+        game.galaxy.SpaceObjects = [
+            new SpaceShip(new Point(0, 0), new Point(0, 0), 600),
+            new SpaceShip(new Point(0, 0), new Point(0, 2), 600),
+            new SpaceObject(new Point(1, 0), new Point(3, 4), 'starbase'),
+            new SpaceObject(new Point(1, 0), new Point(3, 3), 'star'),
+            new SpaceObject(new Point(4, 4), new Point(3, 3), 'star')
+        ];
+        const us = ['?', '?', '?'];
+        const ks = [
+            [[2, 0, 0], [0, 1, 1], [0, 0, 0]],
+            [[0, 0, 0], [0, 0, 0], [0, 0, 0]],
+            [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
+        ];
+        const expected = [
+            [ks[0][0], ks[0][1], ks[0][2], us, us, us, us, us],
+            [ks[1][0], ks[1][1], ks[1][2], us, us, us, us, us],
+            [ks[2][0], ks[2][1], ks[2][2], us, us, us, us, us],
+            [us, us, us, us, us, us, us, us],
+            [us, us, us, us, us, us, us, us],
+            [us, us, us, us, us, us, us, us],
+            [us, us, us, us, us, us, us, us],
+            [us, us, us, us, us, us, us, us]
+        ];
+        game.longScan();
+        expect(game.knownGalaxy).toEqual(expected);
+    })
+});
+
+
+

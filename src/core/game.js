@@ -10,35 +10,13 @@ class Game {
         this.galaxy = new Galaxy(config.GALAXY);
         this.isOver = false;
         this.starDates = config.INITIAL_STARDATES;
-        this.knownQuadrants = [];
+        this.knownGalaxy = [];
         for (let i = 0; i < Math.sqrt(config.GALAXY.QUADRANTS); i++) {
-            this.knownQuadrants.push([]);
+            this.knownGalaxy.push([]);
             for (let j = 0; j < Math.sqrt(config.GALAXY.QUADRANTS); j++) {
-                this.knownQuadrants[i].push(["?", "?", "?"]);
+                this.knownGalaxy[i].push(["?", "?", "?"]);
             }
         }
-    }
-
-    longDistanceScan() {
-        const types = {
-            ship: 0,
-            starbase: 1,
-            star: 2
-        };
-        const quadrants = this.galaxy.getSurroundingQuadrantsPos(this.player.quadrant);
-        let result = [];
-        quadrants.forEach((r, y) => {
-            result.push([]);
-            r.forEach((q, x) => {
-                let counter = [0, 0, 0];
-                this.galaxy.getQuadrantObjects(q).forEach(so => {
-                    counter[types[so.type]] += 1;
-                });
-                result[y].push(counter);
-                this.knownQuadrants[q.x][q.y] = counter;
-            });
-        });
-        return result;
     }
 
     movePlayer(xOffset, yOffset) {
@@ -82,25 +60,6 @@ class Game {
         }
     }
 
-    makeKlingonsTurn() {
-        this.galaxy.getQuadrantObjects(this.player.quadrant).forEach(so => {
-            if (so.type == "ship") {
-                let discanceToPlayer = mathSupport.cityBlockDistance(
-                    this.player.sector.x,
-                    this.player.sector.y,
-                    so.sector.x,
-                    so.sector.y
-                );
-                let hasHit = Math.random() > (1 - 5 / (mathSupport.cityBlockDistance(discanceToPlayer) + 4));
-                if(hasHit){
-                    console.log('Klingons has attacked and hit you!');
-                } else {
-                    console.log('Klingons has attacked, but missed.');
-                }
-            }
-        });
-    }
-
     detectPlayerCollisions() {
         this.galaxy.getQuadrantObjects(this.player.quadrant).forEach(so => {
             if (mathSupport.hasCollided(so.sector, this.player.sector)) {
@@ -112,6 +71,33 @@ class Game {
                 });
             }
         });
+    }
+
+    longScan() {
+        const types = {
+            "ship": 0,
+            "starbase": 1,
+            "star": 2
+        };
+        let scanResult = [];
+        for (let y = 0; y < 3; y++) {
+            let qY = this.player.quadrant.y - 1 + y;
+            if (mathSupport.inRange(qY, 0, 7)) {
+                scanResult.push([]);
+                for (let x = 0; x < 3; x++) {
+                    let qX = this.player.quadrant.x - 1 + x;
+                    if (mathSupport.inRange(qX, 0, 7)) {
+                        let objectsCounter = [0, 0, 0];
+                        this.galaxy
+                            .getQuadrantObjects(new Point(qX, qY))
+                            .forEach(so => objectsCounter[types[so.type]]++);
+                        scanResult[scanResult.length - 1].push(objectsCounter);
+                        this.knownGalaxy[qY][qX] = objectsCounter;
+                    }
+                }
+            }
+        }
+        return scanResult;
     }
 
     checkIfOver() {

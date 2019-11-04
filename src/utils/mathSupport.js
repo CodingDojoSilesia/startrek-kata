@@ -22,8 +22,8 @@ function hasCollided(pos1, pos2){
 
 function inRange(value, min, max){
     if (min > max)
-        throw new RangeError('Minimum is bigger than maximum');
-    return (value >= min && value <= max);
+        throw new RangeError('Min value cannot be biger than max');
+    return value >= min && value <= max;
 }
 
 module.exports = {

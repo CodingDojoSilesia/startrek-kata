@@ -52,20 +52,22 @@ function renderEmptyQuadrant() {
     return quadrantString;
 }
 
-function render2dArr(arr){
+function render2dArray(arr){
     let renderStr = '';
-    for (let y = arr.length - 1; y >= 0; y--){
-        for(let x = 0; x < arr[y].length; x++){
-            renderStr += '|' + arr[y][x].join('');
-        }
-        renderStr += '|' + eol;
-    }
+    [...arr].reverse().forEach(row => {
+        renderStr += '|';
+        row.forEach(el => {
+            renderStr += el.join('') + '|';
+        })
+        renderStr += eol;
+    })
     return renderStr;
 }
+
 module.exports = {
     renderQuadrant,
     renderEmptyQuadrant,
     getPosInQuadStr,
-    render2dArr,
-    displayPlayerRaport
+    displayPlayerRaport,
+    render2dArray
 };
