@@ -67,4 +67,5 @@ while (!game.isOver) {
             game.playerShoot(amountOfEnergy);
         }
     }
+    game.makeKlingonsTurn();
 }

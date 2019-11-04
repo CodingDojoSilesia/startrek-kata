@@ -19,10 +19,29 @@ class Game {
         }
     }
 
+    makeKlingonsTurn() {
+        this.galaxy.getQuadrantObjects(this.player.quadrant).forEach(so => {
+            if (so.type == "ship") {
+                let distanceToPlayer = mathSupport.cityBlockDistance(
+                    this.player.sector.x,
+                    this.player.sector.y,
+                    so.sector.x,
+                    so.sector.y
+                );
+                let hasHit = Math.random() > (1 - 5 / (mathSupport.cityBlockDistance(distanceToPlayer) + 4));
+                if(hasHit){
+                    console.log('Klingons has attacked and hit you!');
+                } else {
+                    console.log('Klingons has attacked, but missed.');
+                }
+            }
+        });
+    }
+
     movePlayer(xOffset, yOffset) {
         const prevousSectorNumber = this.galaxy.getSectorNumberFromPosition(this.player.quadrant, this.player.sector);
         const prevousGlobalPos = this.galaxy.getGlobalPositionFromSectorNumber(prevousSectorNumber);
-        const newSectorNumber = prevousSectorNumber + yOffset + xOffset * 64;
+        const newSectorNumber = prevousSectorNumber + xOffset + yOffset * 64;
         const newQuadrant = this.galaxy.getQuadrantFromSectorNumber(newSectorNumber);
         const newSector = this.galaxy.getSectorFromSectorNumber(newSectorNumber);
         const currentGlobalPos = this.galaxy.getGlobalPositionFromSectorNumber(newSectorNumber);

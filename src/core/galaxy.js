@@ -59,15 +59,15 @@ class Galaxy {
     getQuadrantFromSectorNumber(sectorNumber) {
         const sectInQuad = this.config.SECTORS_IN_QUADRANT;
         const nofQuad = this.config.QUADRANTS;
-        let x = Math.floor(sectorNumber / (Math.sqrt(nofQuad) * sectInQuad));
-        let y = Math.floor(sectorNumber / Math.sqrt(nofQuad)) % Math.sqrt(sectInQuad);
+        let y = Math.floor(sectorNumber / (Math.sqrt(nofQuad) * sectInQuad));
+        let x = Math.floor(sectorNumber / Math.sqrt(nofQuad)) % Math.sqrt(sectInQuad);
         return new Point(x, y);
     }
 
     getSectorFromSectorNumber(sectorNumber) {
         const sectInQuad = this.config.SECTORS_IN_QUADRANT;
-        let x = Math.floor(sectorNumber / sectInQuad) % Math.sqrt(sectInQuad);
-        let y = sectorNumber % Math.sqrt(sectInQuad);
+        let y = Math.floor(sectorNumber / sectInQuad) % Math.sqrt(sectInQuad);
+        let x = sectorNumber % Math.sqrt(sectInQuad);
         return new Point(x, y);
     }
 
