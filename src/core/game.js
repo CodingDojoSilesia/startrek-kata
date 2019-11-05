@@ -20,22 +20,63 @@ class Game {
     }
 
     makeKlingonsTurn() {
-        this.galaxy.getQuadrantObjects(this.player.quadrant).forEach(so => {
-            if (so.type == "ship") {
+        this.galaxy.removeDestroyed();
+        this.galaxy.getQuadrantObjects(this.player.quadrant).forEach((so, i) => {
+            if (so.type == "ship" ) {
                 let distanceToPlayer = mathSupport.cityBlockDistance(
                     this.player.sector.x,
                     this.player.sector.y,
                     so.sector.x,
                     so.sector.y
                 );
-                let hasHit = Math.random() > (1 - 5 / (mathSupport.cityBlockDistance(distanceToPlayer) + 4));
+                let dmg = 30;
+                so.reducePower(dmg);
+                let hasHit = Math.random() < (5 / (distanceToPlayer + 4));
                 if(hasHit){
-                    console.log('Klingons has attacked and hit you!');
+                    console.log(`Klingons has attacked and hit you! You lose ${dmg} power.`);
+                    this.player.reducePower(dmg);
                 } else {
                     console.log('Klingons has attacked, but missed.');
                 }
             }
         });
+    }
+
+    playerShoot(power){
+        if(power >= this.player.power){
+            console.log('You do not have enough power!');
+            return;
+        }
+        let closestKlingons = this.galaxy.getQuadrantObjects(this.player.quadrant)
+            .filter(so => so.type == 'ship')
+            .sort((prev, cur) => {
+                let prevDist = mathSupport.cityBlockDistance(this.player.sector.x, this.player.sector.y, prev.sector.x, prev.sector.y);
+                let curDist = mathSupport.cityBlockDistance(this.player.sector.x, this.player.sector.y, cur.sector.x, cur.sector.y);
+                return prevDist > curDist;
+            });
+        if(closestKlingons.length <= 0){
+            console.log('There is no remaining klingons in your current quadrant');
+        } else {
+            this.player.reducePower(power);
+            let distanceToPlayer = mathSupport.cityBlockDistance(
+                this.player.sector.x,
+                this.player.sector.y,
+                closestKlingons[0].sector.x,
+                closestKlingons[0].sector.y
+            );
+            let hasHit = Math.random() < (5 / (distanceToPlayer + 4));
+            if (hasHit){
+                closestKlingons[0].reducePower(power);
+                if(closestKlingons[0].power <= 0){
+                    closestKlingons[0].isDestroyed = true;
+                    console.log('You have destroyed klingon!');
+                } else {
+                    console.log(`You have hit klingon, enemy has ${closestKlingons[0].power} more power.`);
+                }
+            } else {
+                console.log('You missed!');
+            }
+        }
     }
 
     movePlayer(xOffset, yOffset) {
@@ -60,10 +101,10 @@ class Game {
         if (
             mathSupport.inRange(prevousGlobalPos.x + xOffset, 0, 63) &&
             mathSupport.inRange(prevousGlobalPos.y + yOffset, 0, 63) &&
-            this.starDates - quadrantDistance > 0 &&
+            this.starDates - quadrantDistance >= 0 &&
             this.player.power - distanceTraveled > 0
         ) {
-            if (!mathSupport.hasCollided(this.player.quadrant, newQuadrant))
+            if (!mathSupport.hasSamePos(this.player.quadrant, newQuadrant))
                 this.galaxy.shuffleQuadrant(this.player.quadrant);
 
             this.starDates -= quadrantDistance;
@@ -81,12 +122,12 @@ class Game {
 
     detectPlayerCollisions() {
         this.galaxy.getQuadrantObjects(this.player.quadrant).forEach(so => {
-            if (mathSupport.hasCollided(so.sector, this.player.sector)) {
+            if (mathSupport.hasSamePos(so.sector, this.player.sector)) {
                 this.player.isDestroyed = true;
                 return;
             } else if (so.type == "starbase") {
                 this.galaxy.getSurrouningSectors(so.sector).forEach(p => {
-                    if (mathSupport.hasCollided(p, this.player.sector)) this.player.power = this.gameConfig.MAX_POWER;
+                    if (mathSupport.hasSamePos(p, this.player.sector)) this.player.power = this.gameConfig.MAX_POWER;
                 });
             }
         });

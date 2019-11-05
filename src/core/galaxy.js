@@ -40,7 +40,7 @@ class Galaxy {
             const quadrant = this.getQuadrantFromSectorNumber(rs);
             const sector = this.getSectorFromSectorNumber(rs);
             if (nofKlingons > 0) {
-                generatedObjects.push(new SpaceShip(quadrant, sector, 600));
+                generatedObjects.push(new SpaceShip(quadrant, sector, 200));
                 nofKlingons--;
             } else if (nofStars > 0) {
                 generatedObjects.push(new SpaceObject(quadrant, sector, "star"));
@@ -53,7 +53,11 @@ class Galaxy {
     }
 
     getQuadrantObjects(quadrant) {
-        return this.SpaceObjects.filter(so => MathSupport.hasCollided(so.quadrant, quadrant));
+        return this.SpaceObjects.filter(so => MathSupport.hasSamePos(so.quadrant, quadrant));
+    }
+
+    removeDestroyed(){
+        this.SpaceObjects = this.SpaceObjects.filter(so => !so.isDestroyed);
     }
 
     getQuadrantFromSectorNumber(sectorNumber) {

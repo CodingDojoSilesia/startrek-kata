@@ -38,11 +38,11 @@ describe("Test randomUniques", () => {
     });
 });
 
-describe("Test hasCollided", () => {
+describe("Test hasSamePos", () => {
     it("Should return true if positions are equals", () =>
-        expect(mathSupport.hasCollided(new Point(3, 3), new Point(3, 3))).toBe(true));
+        expect(mathSupport.hasSamePos(new Point(3, 3), new Point(3, 3))).toBe(true));
     it("Should return true if positions are different", () =>
-        expect(mathSupport.hasCollided(new Point(3, 3), new Point(3, 1))).toBe(false));
+        expect(mathSupport.hasSamePos(new Point(3, 3), new Point(3, 1))).toBe(false));
 });
 
 describe('Test inRange', () => {

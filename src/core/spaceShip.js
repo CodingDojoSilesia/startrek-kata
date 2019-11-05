@@ -4,7 +4,6 @@ class SpaceShip extends SpaceObject {
     constructor(quadrant, sector, power){
         super(quadrant, sector, 'ship');
         this.power = power;
-        this.isDestroyed = false;
     }
 
     reducePower(amount) {
