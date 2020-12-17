@@ -32,5 +32,11 @@ module.exports = {
             limit: [/\d+/],
             limitMessage: 'INCORRECT AMOUNT OF ENERGY'
         }));
+    },
+    readContinueDecision(){
+        return readlineSync.question('Do you want to contiune? (y/n): ', {
+            limit: [/y|n/],
+            limitMessage: 'INCORRECT ANSWER Y/N'
+        });
     }
 };
